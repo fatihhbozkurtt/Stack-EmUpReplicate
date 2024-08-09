@@ -29,7 +29,7 @@ public class GameManager : MonoSingleton<GameManager>
     }
 
     public void StartGame()
-    {
+    { 
         isLevelActive = true;
         LevelStartedEvent?.Invoke();
     }

@@ -42,19 +42,11 @@ public class CameraManager : MonoSingleton<CameraManager>
         });
     }
 
-    public void SetCam(CamType camType)
+    private void SetCam(CamType camType)
     {
         for (int i = 0; i < vcamArr.Length; i++)
         {
-            if (i == (int)camType)
-            {
-                vcamArr[i].Priority = 50;
-            }
-
-            else
-            {
-                vcamArr[i].Priority = 0;
-            }
+            vcamArr[i].Priority = i == (int)camType ? 50 : 0;
         }
     }
 

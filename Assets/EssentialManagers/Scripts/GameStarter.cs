@@ -1,22 +1,26 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class GameStarter : MonoBehaviour, IPointerDownHandler
+namespace EssentialManagers.Scripts
 {
-    bool ready = false;
-
-    private void Start()
+    public class GameStarter : MonoBehaviour, IPointerDownHandler
     {
-        ready = true;
-    }
+        public bool autoStart;
+        private bool _isGameStarted;
 
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        if (ready)
+        private IEnumerator Start()
         {
-            ready = false;
+            yield return new WaitForSeconds(0.1f);
+            if (!autoStart) yield break;
+            _isGameStarted = true;
+            GameManager.instance.StartGame();
+        }
+
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            if (_isGameStarted) return;
+            _isGameStarted = true;
             GameManager.instance.StartGame();
         }
     }

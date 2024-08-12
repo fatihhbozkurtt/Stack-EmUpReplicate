@@ -1,14 +1,19 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class CellController : MonoBehaviour
 {
     [Header("References")] [SerializeField]
     private Transform cellGround;
 
+    [SerializeField] private CoinStackHandler coinStackHandler;
+
     [Header("Debug")] public bool isPickable;
+    public bool isOccupied;
+    [SerializeField] private CoinStackHandler csh;
     [SerializeField] Vector2Int coordinates;
-    [SerializeField] List<CellController> neighbours;
+    public List<CellController> neighbours;
 
 
     private void Start()
@@ -25,18 +30,29 @@ public class CellController : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!isPickable) return;
+        //    if (!isPickable) return;
         if (!GameManager.instance.isLevelActive) return;
 
-        cellGround.SetParent(null);
+        //  csh.gameObject.SetActive(false);
     }
-
 
     #region GETTERS & SETTERS
 
-    private void SetFree()
+    public void SetOccupied(CoinStackHandler _csh)
     {
-        isPickable = true;
+        csh = _csh;
+        isOccupied = true;
+    }
+
+    public void SetFree()
+    {
+        csh = null;
+        isOccupied = false;
+    }
+
+    public CoinStackHandler GetCoinStackObj()
+    {
+        return csh;
     }
 
     public Vector2Int GetCoordinates()

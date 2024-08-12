@@ -9,8 +9,9 @@ public class GridManager : MonoSingleton<GridManager>
     [Header("References")] public GameObject cellPrefab; // Prefab for the cell
     [Header("Debug")] public List<CellController> gridPlan;
 
-    private void Start()
+    protected override void Awake()
     {
+        base.Awake();
         CreateGrid();
     }
 
@@ -21,11 +22,12 @@ public class GridManager : MonoSingleton<GridManager>
             for (var y = 0; y < gridHeight; y++)
             {
                 Vector2Int coordinates = new Vector2Int(x, y);
-                GameObject cell = Instantiate(cellPrefab, new Vector3(x * cellSpacing, y * cellSpacing, 0),
+                GameObject cell = Instantiate(cellPrefab, new Vector3(x * cellSpacing, 0, y * cellSpacing),
                     cellPrefab.transform.rotation);
                 CellController cellController = cell.GetComponent<CellController>();
                 cellController.Initialize(coordinates);
                 cell.transform.parent = transform;
+                gridPlan.Add(cellController);
             }
         }
     }

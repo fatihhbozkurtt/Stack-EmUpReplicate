@@ -54,5 +54,4 @@ public class CameraManager : MonoSingleton<CameraManager>
     {
         return vcamArr[(int)camType];
     }
-
 }

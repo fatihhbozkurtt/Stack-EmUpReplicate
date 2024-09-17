@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace EssentialManagers.Scripts
 {
@@ -23,9 +24,14 @@ namespace EssentialManagers.Scripts
 
         #endregion
 
-        [SerializeField] private List<CellController> cells = new();
+        [Header("References")] [SerializeField]
+        private LineRenderer lrPrefab;
+
+        [Header("Debug")] [SerializeField] private List<CellController> cells = new();
         [SerializeField] private List<CoinStackHandler> selectedCoinStacks = new();
         private bool _isDragging = false;
+        private LineRenderer _currentLine;
+        private const float LineVerticalOffset = 0.3f;
 
         void Update()
         {
@@ -46,6 +52,11 @@ namespace EssentialManagers.Scripts
                         cells.Add(cell);
                         selectedCoinStacks.Add(cell.GetCoinStackObj());
                         _isDragging = true;
+
+                        Vector3 cellPos = cell.transform.position + Vector3.up * LineVerticalOffset;
+                        _currentLine = Instantiate(lrPrefab, cellPos, Quaternion.identity, transform);
+                        _currentLine.positionCount = 1;
+                        _currentLine.SetPosition(0, cellPos);
                     }
                 }
             }
@@ -68,6 +79,10 @@ namespace EssentialManagers.Scripts
 
                         cells.Add(cell);
                         selectedCoinStacks.Add(cell.GetCoinStackObj());
+                        
+                        _currentLine.positionCount = cells.Count;
+                        _currentLine.SetPosition(cells.Count - 1,
+                            cell.transform.position + Vector3.up * LineVerticalOffset);
                     }
                 }
             }
@@ -76,24 +91,15 @@ namespace EssentialManagers.Scripts
             {
                 if (selectedCoinStacks.Count > 1)
                 {
-                    int totalValue = 0;
-                    for (int i = 0; i < selectedCoinStacks.Count; i++)
-                    {
-                        if (i != selectedCoinStacks.Count - 1)
-                        {
-                            totalValue += selectedCoinStacks[i].GetStackData().value;
-                            selectedCoinStacks[i].Disappear();
-                        }
-                        else
-                        {
-                            selectedCoinStacks[i].IncrementValue(totalValue);
-                        }
-                    }
+                    selectedCoinStacks[0]
+                        .JumpToAnotherCell(selectedCoinStacks[1]
+                            , new List<CoinStackHandler>(selectedCoinStacks));
                 }
 
                 _isDragging = false;
-                selectedCoinStacks.Clear();  
-                cells.Clear();  
+                selectedCoinStacks.Clear();
+                cells.Clear();
+                Destroy(_currentLine.gameObject);
             }
         }
     }

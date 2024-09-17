@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1440834836379712896
+--- !u!1 &3508342369937399777
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3990772932278032357}
-  - component: {fileID: 1930905528839163197}
+  - component: {fileID: 7475266464421697426}
+  - component: {fileID: 7635705330802282915}
   m_Layer: 0
-  m_Name: Coin_Stack
+  m_Name: InputManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3990772932278032357
+--- !u!4 &7475266464421697426
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1440834836379712896}
+  m_GameObject: {fileID: 3508342369937399777}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -32,24 +32,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1930905528839163197
+--- !u!114 &7635705330802282915
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1440834836379712896}
+  m_GameObject: {fileID: 3508342369937399777}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b594c822775d489e9860c30cd656f880, type: 3}
+  m_Script: {fileID: 11500000, guid: 6aad6fbb833687a42a2a4c83d62835fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coinPrefab: {fileID: 7508031366644168865, guid: 9eb931e35d5ff104dac69ad23dacc04a, type: 3}
-  displayerStackPrefab: {fileID: 4340186843099579577, guid: fe3b2b5189914cc4e9abee152a694053, type: 3}
-  colorDataSo: {fileID: 11400000, guid: 2b0dc52e6e5085e47a09afc9c274588c, type: 2}
-  parentCell: {fileID: 0}
-  coinStackData:
-    value: 0
-    colorEnum: 0
-    coins: []
-  forDisplay: 0
+  lrPrefab: {fileID: 719049599398174194, guid: 46fcbbc501bdc194488a6b858f75f8b8, type: 3}
+  cells: []
+  selectedCoinStacks: []

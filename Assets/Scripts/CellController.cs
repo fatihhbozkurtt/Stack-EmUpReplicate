@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class CellController : MonoBehaviour
 {
@@ -14,7 +13,6 @@ public class CellController : MonoBehaviour
     [SerializeField] private CoinStackHandler csh;
     [SerializeField] Vector2Int coordinates;
     public List<CellController> neighbours;
-
 
     private void Start()
     {
@@ -65,8 +63,9 @@ public class CellController : MonoBehaviour
         List<CellController> gridCells = GridManager.instance.gridPlan;
         List<CellController> neighbors = new();
 
-        int[] dx = { 1, 0, -1, 0 };
-        int[] dz = { 0, 1, 0, -1 };
+        // Direction vectors for 8 directions (including diagonals)
+        int[] dx = { 1, 1, 0, -1, -1, -1, 0, 1 };
+        int[] dz = { 0, 1, 1, 1, 0, -1, -1, -1 };
 
         for (int i = 0; i < dx.Length; i++)
         {
@@ -80,6 +79,11 @@ public class CellController : MonoBehaviour
         }
 
         return neighbors;
+    }
+
+    public Vector3 GetCenter()
+    {
+        return transform.position + new Vector3(0, 0.3f, 0);
     }
 
     #endregion

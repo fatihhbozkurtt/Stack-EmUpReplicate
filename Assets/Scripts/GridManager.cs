@@ -74,6 +74,28 @@ public class GridManager : MonoSingleton<GridManager>
             }
         }
 
+
         return null;
+    }
+
+
+    public List<CellController> GetShuffledGridPlan()
+    {
+        List<CellController> shuffledList = new List<CellController>(gridPlan);
+        shuffledList.Shuffle();
+        return shuffledList;
+    }
+
+    public List<CellController> GetCellsOnTheSameColumn(int targetColumIndex)
+    {
+        List<CellController> list = new List<CellController>();
+        for (var i = 0; i < gridHeight; i++)
+        {
+            if (GetGridCellByCoordinates(new Vector2Int(targetColumIndex, i)) == null) continue;
+            if (!GetGridCellByCoordinates(new Vector2Int(targetColumIndex, i)).isOccupied) continue;
+            list.Add(GetGridCellByCoordinates(new Vector2Int(targetColumIndex, i)));
+        }
+        
+        return list;
     }
 }

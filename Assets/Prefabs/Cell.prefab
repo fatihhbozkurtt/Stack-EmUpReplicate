@@ -69,7 +69,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cellGround: {fileID: 0}
-  coinStackHandler: {fileID: 0}
+  cshPrefab: {fileID: 1930905528839163197, guid: caa5b938fa9767946915b9f3778d56cd, type: 3}
   isPickable: 0
   isOccupied: 0
   csh: {fileID: 0}

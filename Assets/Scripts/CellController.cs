@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class CellController : MonoBehaviour
 {
     [Header("References")] [SerializeField]
     private Transform cellGround;
 
-    [SerializeField] private CoinStackHandler coinStackHandler;
+    [SerializeField] private CoinStackHandler cshPrefab;
 
     [Header("Debug")] public bool isPickable;
     public bool isOccupied;
@@ -26,12 +27,10 @@ public class CellController : MonoBehaviour
         coordinates = initCoords;
     }
 
-    private void OnMouseDown()
+    public void InstantiateCSH()
     {
-        //    if (!isPickable) return;
-        if (!GameManager.instance.isLevelActive) return;
-
-        //  csh.gameObject.SetActive(false);
+        Instantiate(cshPrefab, GetCenter(), Quaternion.identity
+            , transform);
     }
 
     #region GETTERS & SETTERS

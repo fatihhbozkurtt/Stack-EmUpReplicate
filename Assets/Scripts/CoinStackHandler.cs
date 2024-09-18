@@ -39,6 +39,14 @@ public class CoinStackHandler : MonoBehaviour
         name = "Stack_" + coinStackData.colorEnum;
     }
 
+    void AssignNewParentCell(CellController newParentCell)
+    {
+        parentCell.SetFree();
+        parentCell = newParentCell;
+        parentCell.SetOccupied(this);
+        
+        transform.SetParent(newParentCell.transform);
+    }
     void SpawnCoins()
     {
         for (int i = 0; i < coinStackData.value; i++)
@@ -230,7 +238,7 @@ public class CoinStackHandler : MonoBehaviour
 
     public void MoveAnotherCell(CellController newParentCell)
     {
-        newParentCell.SetOccupied(this);
+        AssignNewParentCell(newParentCell);
         transform.DOMove(newParentCell.GetCenter(), 0.25f);
     }
 }

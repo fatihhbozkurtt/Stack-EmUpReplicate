@@ -3,11 +3,13 @@ using UnityEngine;
 
 public class FeedManager : MonoSingleton<FeedManager>
 {
-    [SerializeField] List<CellController> emptyCells = new List<CellController>();
+    [SerializeField] List<CellController> emptyCells = new();
 
     public void OnBlastEnded()
     {
         #region Detect Empty Cells
+
+        GridManager gridManager = GridManager.instance;
 
         List<CellController> gridPlan = GridManager.instance.gridPlan;
 
@@ -30,12 +32,12 @@ public class FeedManager : MonoSingleton<FeedManager>
 
             appliedColumnIndex.Add(emptyCell.GetCoordinates().x);
             List<CellController> occupiedCellsOnSameColumn =
-                GridManager.instance.GetCellsOnTheSameColumn(emptyCell.GetCoordinates().x);
+                gridManager.GetCellsOnTheSameColumn(emptyCell.GetCoordinates().x);
 
             for (var i = 0; i < occupiedCellsOnSameColumn.Count; i++)
             {
                 CoinStackHandler movableCsh = occupiedCellsOnSameColumn[i].GetCoinStackObj();
-                CellController targetCellToMove = GridManager.instance
+                CellController targetCellToMove = gridManager
                     .GetGridCellByCoordinates(new Vector2Int(emptyCell.GetCoordinates().x, i));
                 occupiedCellsOnSameColumn[i].SetFree();
                 movableCsh.MoveAnotherCell(targetCellToMove);
@@ -44,8 +46,34 @@ public class FeedManager : MonoSingleton<FeedManager>
 
         #endregion
 
-        // #region Add New CSH
-        //w
-        // #endregion
+        #region Add New CSH
+
+        for (int rowIndex = 0; rowIndex < gridManager.gridHeight; rowIndex++)
+        {
+            List<CellController> column = gridManager.GetCellsOnTheSameColumn(rowIndex);
+            int emptyCellCount = 0;
+            foreach (CellController cell in column)
+            {
+                if (cell.isOccupied) continue;
+
+                emptyCellCount++;
+            }
+
+            for (int y = 0; y < emptyCellCount; y++)
+            {
+                Vector2Int epmtyCellCoordinate = new Vector2Int(rowIndex,
+                    gridManager.gridHeight - emptyCellCount + y);
+
+                CellController cell = gridManager.GetGridCellByCoordinates(epmtyCellCoordinate);
+                cell.InstantiateCSH();
+            }
+        }
+
+        #endregion
     }
+}
+
+[System.Serializable]
+public class ColumnCellData
+{
 }
